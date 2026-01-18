@@ -1,8 +1,8 @@
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
-  name: ${{ values.cluster_name }}
-  description: EKS Cluster in ${{ values.aws_region }}
+  name: eks-cluster
+  description: EKS Cluster in eks-cluster
 spec:
   type: kubernetes-cluster
   owner: guest
