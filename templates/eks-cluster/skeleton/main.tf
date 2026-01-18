@@ -6,7 +6,7 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 20.0"
 
-  cluster_name    = "${{ values.cluster_name }}"
+  cluster_name    = "eks-cluster"
   cluster_version = "1.31"
 
   vpc_id     = "vpc-123456" # In a real scenario, you'd pass this as a variable
