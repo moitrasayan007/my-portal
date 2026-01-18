@@ -1,0 +1,45 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: eks-cluster-template
+  title: Create AWS EKS Cluster
+  description: UI to provision an EKS cluster via Terraform and GitHub Actions
+spec:
+  owner: platform-team
+  type: infrastructure
+  parameters:
+    - title: Cluster Settings
+      required: [cluster_name]
+      properties:
+        cluster_name:
+          type: string
+          title: Cluster Name
+        region:
+          type: string
+          title: AWS Region
+          default: us-east-1
+    - title: GitHub Repository
+      required: [repoUrl]
+      properties:
+        repoUrl:
+          title: Repository Location
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts: [github.com]
+
+  steps:
+    - id: fetch
+      name: Generating Files
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          cluster_name: ${{ parameters.cluster_name }}
+          region: ${{ parameters.region }}
+    - id: publish
+      name: Creating Repository
+      action: publish:github
+      input:
+        allowedHosts: ['github.com']
+        repoUrl: ${{ parameters.repoUrl }}
